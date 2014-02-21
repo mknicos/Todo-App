@@ -64,13 +64,23 @@ Task.findByFilter = function(data, fn){
   // data is an object containing the keys and values we want to filter (req.query)
   var limit = parseInt(data.limit);
   var page = parseInt((data.page) - 1);
+  var sort = data.sort;
+  var order = parseInt(data.order);
   delete data.limit;
   delete data.page;
+  delete data.sort;
+  delete data.order;
   console.log('data NEXT:');
-  console.log(data);
+  console.log('Limit>>>');
   console.log(limit);
+  console.log('Page>>>');
   console.log(page);
-  tasks.find(data).skip(limit * page).limit(limit).toArray(function(err, records){
+  console.log('Sort>>>');
+  console.log(sort);
+  console.log('Order>>>');
+  console.log(order);
+  tasks.find(data, {sort: {sort: order}]).skip(limit * page).limit(limit).toArray(function(err, records){
+    //BUG----------------------------------------------
     //'records' will be sent back to exports.filter
     //and sent to requester in arrays
     fn(records);

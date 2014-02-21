@@ -46,20 +46,27 @@ exports.update = function(req, res){
 
 exports.filter = function(req, res){
   init();
-  var limit = 5;
+
+  //bugFix
   if(req.query.isComplete === 'true'){
     req.query.isComplete = true;
   }else if(req.query.isComplete === 'false'){
     req.query.isComplete = false;
   }
+  //defaults
   if(!req.query.limit){
-    req.query.limit = limit;
+    req.query.limit = 5;
   }
   if(!req.query.page){
     req.query.page = 1;
   }
-  console.log('req.query:');
-  console.log(req.query);
+  if(!req.query.sort){
+    req.query.sort = 'dueDate';
+  }
+  if(!req.query.order){
+    req.query.order = 1;
+  }
+
   Task.findByFilter(req.query, function(records){
     res.send({tasks:records});
   });

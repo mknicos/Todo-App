@@ -51,7 +51,6 @@ describe('tasks', function(){
       .send(obj1)
       .end(function(err,res){
         expect(res.body.name).to.equal(obj1.name);
-        debugger;
         expect(res.body.dueDate).to.equal('2014-02-25T00:00:00.000Z');
         expect(res.body._id).to.have.length(24);
         done();
