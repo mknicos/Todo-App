@@ -46,7 +46,19 @@ exports.update = function(req, res){
 
 exports.filter = function(req, res){
   init();
-  console.log('REQ:');
+  var limit = 5;
+  if(req.query.isComplete === 'true'){
+    req.query.isComplete = true;
+  }else if(req.query.isComplete === 'false'){
+    req.query.isComplete = false;
+  }
+  if(!req.query.limit){
+    req.query.limit = limit;
+  }
+  if(!req.query.page){
+    req.query.page = 1;
+  }
+  console.log('req.query:');
   console.log(req.query);
   Task.findByFilter(req.query, function(records){
     res.send({tasks:records});

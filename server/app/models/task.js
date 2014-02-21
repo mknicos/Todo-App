@@ -8,7 +8,7 @@ var Mongo = require('mongodb');
 function Task(task){
   this._id = task._id;
   this.name = task.name;
-  this.dueDate = task.dueDate;
+  this.dueDate = new Date(task.dueDate);
   this.isComplete = task.isComplete || false;
   this.tags = task.tags || [];
   this.priority = task.priority;
@@ -61,9 +61,18 @@ Task.findByTag = function(tag, fn){
 };
 
 Task.findByFilter = function(data, fn){
+  // data is an object containing the keys and values we want to filter (req.query)
+  var limit = parseInt(data.limit);
+  var page = parseInt((data.page) - 1);
+  delete data.limit;
+  delete data.page;
   console.log('data NEXT:');
   console.log(data);
-  tasks.find(data).toArray(function(err, records){
+  console.log(limit);
+  console.log(page);
+  tasks.find(data).skip(limit * page).limit(limit).toArray(function(err, records){
+    //'records' will be sent back to exports.filter
+    //and sent to requester in arrays
     fn(records);
   });
 };

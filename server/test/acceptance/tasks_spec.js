@@ -35,8 +35,8 @@ describe('tasks', function(){
               var ID2 = p2._id.toString();
               var ID3 = p3._id.toString();
               obj1 = {name:'laundry', dueDate: '2014-02-25', isComplete: false, tags: ['home', 'shopping'], priority: ID1};
-              obj2 = {name:'trash', dueDate: '2014-03-21', isComplete: false, tags: ['home', 'outside'], priority: ID2};
-              obj3 = {name:'homework', dueDate: '2014-03-15', isComplete: true, tags: ['work', 'school'], priority: ID3};
+              obj2 = {name:'trash', dueDate: '2014/02/26', isComplete: false, tags: ['home', 'outside'], priority: ID2};
+              obj3 = {name:'homework', dueDate: 'Feb 2nd, 2014', isComplete: true, tags: ['work', 'school'], priority: ID3};
               done();
             });
           });
@@ -52,7 +52,7 @@ describe('tasks', function(){
       .end(function(err,res){
         expect(res.body.name).to.equal(obj1.name);
         debugger;
-        expect(res.body.dueDate).to.equal(obj1.dueDate);
+        expect(res.body.dueDate).to.equal('2014-02-25T00:00:00.000Z');
         expect(res.body._id).to.have.length(24);
         done();
       });
