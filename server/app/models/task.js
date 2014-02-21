@@ -59,3 +59,11 @@ Task.findByTag = function(tag, fn){
     fn(records);
   });
 };
+
+Task.findByFilter = function(data, fn){
+  console.log('data NEXT:');
+  console.log(data);
+  tasks.find(data).toArray(function(err, records){
+    fn(records);
+  });
+};

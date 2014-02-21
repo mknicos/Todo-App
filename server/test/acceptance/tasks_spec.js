@@ -117,5 +117,27 @@ describe('tasks', function(){
     });
   });
 
+  describe('PUT /tasks', function(){
+    it('should update a specific priority in the database', function(done){
+      var t1 = new Task(obj1);
+      var t2 = new Task(obj2);
+      t1.save(function(){
+        t2.save(function(){
+          t1.name = 'Something';
+          console.log(t1);
+          request(app)
+          .put('/tasks')
+          .send(t1)
+          .end(function(err, res){
+            console.log(res.body);
+            expect(res.body._id).to.equal(t1._id.toString());
+            expect(res.body.name).to.equal('Something');
+            done();
+          });
+        });
+      });
+    });
+  });
+
 
 });

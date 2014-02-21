@@ -30,9 +30,11 @@ app.put('/priorities', d, priorities.update);
 
 //task routing
 app.post('/tasks', d, tasks.create);
+app.get('/tasks/filter', d, tasks.filter);
 app.get('/tasks', d, tasks.index);
 app.get('/tasks/:id', d, tasks.show);
 app.del('/tasks/:id', d, tasks.destroy);
+app.put('/tasks', d, tasks.update);
 
 /* --- pipeline ends   */
 
