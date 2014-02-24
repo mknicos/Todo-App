@@ -10,7 +10,7 @@
     $('#pSave').click(savePriority);
     $('#pTable').on('click', '.pDelete', deleteRow);
     $('#pTable').on('click', '.popToInput', changeToInput);
-    $('#confirm').click(confirmChanges);
+    $('#pConfirm').click(confirmChanges);
     $('#openpForm').click(openForm);
   }
 
@@ -32,6 +32,7 @@
 
   function openForm(){
     $('#pForm').show();
+    $('body').addClass('disableBG');
   }
 
   function savePriority(){
@@ -42,6 +43,7 @@
     var value = $('#pValueInput').val();
     $('#pNameInput').val('').focus();
     $('#pValueInput').val('');
+    $('body').removeClass('disableBG');
 
   // Ajax post to db
     var url = window.location.origin.replace(/3000/, '4000') + '/priorities';
@@ -71,7 +73,7 @@
       $tdName.append($divName);
       $tdValue.append($divValue);
       $row.append($tdName, $tdValue, $tdDelete);
-      $('#pTable').append($row);
+      $('#tBody').append($row);
     }else{
       alert('priority name already exists in database, please pick a different name and try again');
     }
@@ -103,7 +105,7 @@
   function changeToInput(){
     // function is called when any name or number is clicked in priority table
     // element that is clicked on is turned into a input box
-    $('#confirm').show();
+    $('#pConfirm').show();
     $editRow = $(this).parent().parent();
     $editRow.addClass('editRow');
     var prevText = $(this).text();
@@ -144,9 +146,9 @@
 
   function updateTable(data){
     console.log(data);
-    $('#pTable tr').remove();
+    $('#tBody tr').remove();
     getPriorities();
-    $('#confirm').hide();
+    $('#pConfirm').hide();
     //var id = data._id;
     //var name = data.name;
     //var value = data.value;

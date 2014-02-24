@@ -1,55 +1,89 @@
 @import url(http://fonts.googleapis.com/css?family=Nova+Square);
+/*--------------Affects Whole Page-------------*/
 body {
   background-color: #add8e6;
 }
 body,
 h1 {
   font-family: 'Nova Square', cursive;
+  color: #0d4643;
 }
 #spacer {
   height: 40px;
 }
-form {
-  border: 1px solid black;
-  padding: 10px;
+.disableBG {
+  background-color: grey;
 }
-.pDelete {
-  width: 20px;
-  height: 20px;
-}
-#confirm {
+/*-----------------Add Priority Form-------------*/
+/*Form to create priorities*/
+#pForm {
+  border: 5px solid #0d4643;
+  padding: 25px;
   display: none;
+  box-shadow: 5px 5px 3px 3px;
+  position: fixed;
+  margin-top: -150px;
+  margin-left: -125px;
+  top: 50%;
+  left: 50%;
+  width: 300px;
+  height: 250px;
+  background-color: #20b2aa;
+  text-align: center;
 }
-.editRow {
-  margin: 10px;
+#pSave {
+  background-color: #ff6347;
+  border: 3px solid #0d4643;
 }
-.editRow input {
-  color: tomato;
+#pForm input {
+  border: 3px solid #0d4643;
 }
-table tr th {
+/*----------------Priority Table-----------------*/
+#pTable tr th {
+  /*table headers in priority table */
   color: grey;
   font-size: 32px;
 }
-table tr td {
+#pTable tr td {
+  /*table data in the priority table */
   font-size: 26px;
 }
-table {
-  border: 1px solid black;
+#pTable {
   box-shadow: 5px 5px 3px 3px;
+  border: 3px solid #0d4643;
+  width: 350px;
+}
+.editRow {
+  /*the row that has been clicked on to be edited*/
+  margin: 10px;
+}
+.editRow input {
+  /*the row that has been clicked on to be edited*/
+  color: tomato;
 }
 #openpForm {
+  /*button to display add priority form*/
   border: 1px solid black;
   width: 75px;
   height: 30px;
   text-align: center;
   font-size: 26px;
   background-color: lightseagreen;
+  border: 3px solid #0d4643;
+  border-bottom: 1px solid #0d4643;
 }
 #openpForm:hover {
+  /*button to display add priority form*/
   box-shadow: 2px 2px 5px 5px black;
 }
-#pForm {
-  display: none;
-  border: 1px solid black;
-  box-shadow: 5px 5px 3px 3px;
+/*X image to delete a priority*/
+.pDelete {
+  width: 20px;
+  height: 20px;
 }
+#pConfirm {
+  /*Hide confirm changes to priority button on page load*/
+  display: none;
+}
+/*------------------Task Form--------------------*/
+/*-------------------Task Table------------------*/
