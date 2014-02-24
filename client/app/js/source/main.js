@@ -16,6 +16,11 @@
     $('#pConfirm').click(confirmChanges);
     $('#openpForm').click(openForm);
     $('#addTask').click(saveTask);
+    $('#nextPage').click(nextPage);
+    $('#prevPage').click(prevPage);
+    $('#taskTBody').on('click', '.tDelete', deleteTaskRow);
+    $('#taskTBody').on('click', '.tag', tagSearch);
+    $('#openTForm').click(openTaskForm);
 
     //tasks----------
     getTasks();
@@ -26,6 +31,7 @@
 
   var $removedRow; // used to track row that delete button was clicked on, for deletion after succes from database res
   var $editRow;
+  var page = 1;
 
 
 //-------------------------------------------------------//
@@ -181,10 +187,10 @@
   function getTasks(){
     //Gets all tasks from database
     var url = window.location.origin.replace(/3000/, '4000') + '/tasks/filter';
-    $.getJSON(url, initGetSuccess);
+    $.getJSON(url, getTaskSuccess);
   }
 
-  function initGetSuccess(data){
+  function getTaskSuccess(data){
     for(var i = 0; i < data.tasks.length; i++){
       addTaskToTable(data.tasks[i]);
     }
@@ -202,7 +208,7 @@
     var tags = task.tags;
     var $tags = $('<div>');
     for(var j = 0; j < tags.length; j++){
-      var $tag = $('<a href="#">');
+      var $tag = $('<a href="#">').addClass('tag');
       if(j+1 === tags.length){
         //last tag appended wont have comma after it
         $tag.text(tags[j]);
@@ -231,8 +237,8 @@
     var $dueDate = $('<td>').append($('<div>').text(dueDate));
     var $tagData = $('<td>').append($tags);
     var $img = $('<img src="../../media/delete.png"/>').addClass('tDelete'); //will be used to delete row
-
-    var $row = $('<tr>').append($isComplete, $name, $dueDate, $priority, $tagData, $img);
+    var $imgDiv = $('<div>').append($img);
+    var $row = $('<tr>').append($isComplete, $name, $dueDate, $priority, $tagData, $imgDiv);
     $row.attr('data-id', taskId);
     $('#taskTBody').append($row);
 
@@ -261,6 +267,67 @@
     $('#taskDueDateInput').val('');
     $('#selectPriority').val('');
     $('#tagsInput').val('');
+    $('#tForm').hide();
+    $('body').removeClass('disableBG');
+  }
+
+  function deleteTaskRow(){
+    debugger;
+  //remove row from task table and its contents from the database
+
+    $removedRow = $(this).parent().parent();
+    //sets global variable to be used if delete request is successful
+
+    var id = $(this).parent().parent().data().id;
+    var url = window.location.origin.replace(/3000/, '4000') + '/tasks/' + id;
+    var type = 'DELETE';
+    var success = removeFromTaskTable;
+
+    $.ajax({url:url, type:type, success: success});
+  }
+
+  function removeFromTaskTable(records){
+    if(records.count === 1){
+      $removedRow.remove();
+    }else{
+      alert('Delete Failed');
+    }
+  }
+
+  function nextPage(event){
+    var url = window.location.origin.replace(/3000/, '4000') + '/tasks/filter';
+    page++;
+    var obj = {page: page};
+    $.getJSON(url, obj, getFilterSuccess);
+    event.preventDefault();  // prevents form from submitting twice
+  }
+
+  function prevPage(event){
+    var url = window.location.origin.replace(/3000/, '4000') + '/tasks/filter';
+    page--;
+    var obj = {page: page};
+    $.getJSON(url, obj, getFilterSuccess);
+    event.preventDefault();  // prevents form from submitting twice
+  }
+
+  function tagSearch(){
+    debugger;
+    var tag = $(this).text();
+    var url = window.location.origin.replace(/3000/, '4000') + '/tasks/filter';
+    var obj = {tag: tag};
+    $.getJSON(url, obj, getFilterSuccess);
+  }
+
+  function getFilterSuccess(data){
+    $('#taskTBody').empty();
+    for(var i = 0; i < data.tasks.length; i++){
+      addTaskToTable(data.tasks[i]);
+    }
+  }
+
+  function openTaskForm(){
+    $('#tForm').show();
+    $('body').addClass('disableBG');
   }
 
 })();

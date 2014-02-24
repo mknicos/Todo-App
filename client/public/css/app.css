@@ -122,3 +122,37 @@ h1 {
   font-size: 14px;
   text-align: center;
 }
+#openTForm {
+  /*button to display add Task form*/
+  border: 1px solid black;
+  width: 75px;
+  height: 30px;
+  text-align: center;
+  font-size: 26px;
+  background-color: lightseagreen;
+  border: 3px solid #0d4643;
+  border-bottom: 1px solid #0d4643;
+}
+#openTForm:hover {
+  /*button to display add priority form*/
+  box-shadow: 2px 2px 5px 5px black;
+}
+#tForm {
+  border: 5px solid #0d4643;
+  padding: 25px;
+  display: none;
+  box-shadow: 0px 0px 25px 15px black;
+  position: fixed;
+  margin-top: -250px;
+  margin-left: -175px;
+  top: 50%;
+  left: 50%;
+  width: 350px;
+  height: 500px;
+  background-color: #20b2aa;
+  text-align: center;
+  z-index: 100;
+}
+#miniSpacer {
+  height: 20px;
+}

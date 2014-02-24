@@ -27,6 +27,7 @@ html(class='no-js', lang='en')
       input#tagsInput(type='text')
       label Task Complete?
       input#isCompleteInput(type='checkbox')
+      #miniSpacer
       button#addTask AddTask
 
     .row
@@ -56,6 +57,7 @@ html(class='no-js', lang='en')
     .row
       .small-1.columns
       .small-10.columns
+        #openTForm Add
         table#taskTable
           thead#taskHeader
             tr
@@ -81,7 +83,6 @@ html(class='no-js', lang='en')
                 a#nextPage(href='#') Next Page
               td
               td
-              
           tbody#taskTBody
       .small-1.columns
     .row
