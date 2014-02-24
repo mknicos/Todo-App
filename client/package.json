@@ -2,13 +2,14 @@
   "name": "application-name",
   "version": "0.0.1",
   "private": true,
-  "scripts":{
+  "scripts": {
     "start": "node app.js"
   },
-  "dependencies":{
-    "connect": "*"
+  "dependencies": {
+    "connect": "*",
+    "moment": "~2.5.1"
   },
-  "devDependencies":{
+  "devDependencies": {
     "grunt": "*",
     "grunt-contrib-jshint": "*",
     "jshint-stylish": "*",
@@ -19,4 +20,3 @@
     "grunt-contrib-clean": "*"
   }
 }
-

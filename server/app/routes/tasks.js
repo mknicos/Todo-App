@@ -4,9 +4,15 @@ var Task;
 
 exports.create = function(req, res){
   init();
+  if(req.body.isComplete === 'true'){
+    req.body.isComplete = true;
+  }else if(req.body.isComplete === 'false'){
+    req.body.isComplete = false;
+  }
 
   var t1 = new Task(req.body);
   t1.save(function(){
+    t1.dueDate = t1.dueDate.toString();
     res.send(t1);
   });
 };

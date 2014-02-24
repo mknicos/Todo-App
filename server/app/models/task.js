@@ -10,7 +10,7 @@ function Task(task){
   this.name = task.name;
   this.dueDate = new Date(task.dueDate);
   this.isComplete = task.isComplete || false;
-  this.tags = task.tags || [];
+  this.tags = task.tags || ['misc'];
   this.priority = task.priority;
 }
 

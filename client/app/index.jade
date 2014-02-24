@@ -16,6 +16,19 @@ html(class='no-js', lang='en')
       label Value
       input#pValueInput(type='text')
       button#pSave Add To Table
+    form#tForm
+      label Task Name
+      input#taskNameInput(type='text')
+      label Due Date
+      input#taskDueDateInput(type='date')
+      label Select Priority
+      select#selectPriority(type='text')
+      label Categories
+      input#tagsInput(type='text')
+      label Task Complete?
+      input#isCompleteInput(type='checkbox')
+      button#addTask AddTask
+
     .row
       .small-12.columns
         h1 Todo List
@@ -37,9 +50,47 @@ html(class='no-js', lang='en')
       .small-3.columns
         button.alert#pConfirm Submit Changes
       .small-9.columns
+    .row
+      .small-12.columns
+        #spacer
+    .row
+      .small-1.columns
+      .small-10.columns
+        table#taskTable
+          thead#taskHeader
+            tr
+              th
+                a#completeText(href='#') Complete?
+              th Name
+              th
+                a(href='#') Due
+              th
+                a(href='#') Priority
+              th
+                a(href='#') Categories
+              th Del
+          tfoot#taskFooter
+            tr
+              td
+                label Num Tasks Per Page
+                input(type='text', value='5')
+              td
+              td
+                a#prevPage(href='#') Prev Page
+              td
+                a#nextPage(href='#') Next Page
+              td
+              td
+              
+          tbody#taskTBody
+      .small-1.columns
+    .row
+      .small-12.columns
+        form#tForm
 
     script(src='/js/vendor/jquery.js')
     script(src='/js/vendor/foundation.js')
     script(src='/js/vendor/lodash.js')
+    script(src="/js/vendor/moment.js")
     script(src='/js/source/main.js')
 

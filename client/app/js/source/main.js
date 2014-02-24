@@ -1,3 +1,4 @@
+/* globals moment: true */
 (function(){
 
   'use strict';
@@ -6,31 +7,47 @@
 
   function initialize(){
     $(document).foundation();
+
+    //priorities--------
     getPriorities();
     $('#pSave').click(savePriority);
     $('#pTable').on('click', '.pDelete', deleteRow);
     $('#pTable').on('click', '.popToInput', changeToInput);
     $('#pConfirm').click(confirmChanges);
     $('#openpForm').click(openForm);
+    $('#addTask').click(saveTask);
+
+    //tasks----------
+    getTasks();
+
+
   }
+//------------------GLOBALS-------------------------//
 
   var $removedRow; // used to track row that delete button was clicked on, for deletion after succes from database res
   var $editRow;
 
+
+//-------------------------------------------------------//
+//----------------------PRIORITIES-----------------------//
+//-------------------------------------------------------//
+
   function getPriorities(){
-  //populates table with initial database entries
+  //populates table with every document in database
+  //defalault is for priorities to be sorted by value
     var url = window.location.origin.replace(/3000/, '4000') + '/priorities';
     $.getJSON(url, getSuccess);
   }
 
   function getSuccess(data){
-  //Called on success of initial page load getJSON requests
+  //Called on success of initial page load getJSON request
     for(var i = 0; i < data.priorities.length; i ++){
       addPriorityToTable(data.priorities[i]);
     }
   }
 
   function openForm(){
+  //Displays 'add priority form' when 'add' button clicked
     $('#pForm').show();
     $('body').addClass('disableBG');
   }
@@ -69,6 +86,10 @@
       var $tdValue = $('<td>');
       var $tdDelete = $('<td>');
 
+      //for Task input box
+      var $option = $('<option>').val(data._id).text(data.name);
+      $('#selectPriority').append($option);
+
       $tdDelete.append($img);
       $tdName.append($divName);
       $tdValue.append($divValue);
@@ -82,10 +103,11 @@
   }
 
   function deleteRow(){
+  //remove row from priorities table and its contents from the database
+
     $removedRow = $(this).parent().parent();
     //sets global variable to be used if delete request is successful
 
-  //remove row from priorities table and its contents from the database
     var id = $(this).parent().parent().data().id;
     var url = window.location.origin.replace(/3000/, '4000') + '/priorities/' + id;
     var type = 'DELETE';
@@ -149,12 +171,96 @@
     $('#tBody tr').remove();
     getPriorities();
     $('#pConfirm').hide();
-    //var id = data._id;
-    //var name = data.name;
-    //var value = data.value;
-   // var row = $('tr[data-id='+id+']');
-    //row.children(':first').children().replaceWith('<div text="'+name+'">');
-    //row.children(':nth-child(2)').children().replaceWith('<div>').text(value);
+  }
+
+//-------------------------------------------------------//
+//----------------------TASKS----------------------------//
+//-------------------------------------------------------//
+
+
+  function getTasks(){
+    //Gets all tasks from database
+    var url = window.location.origin.replace(/3000/, '4000') + '/tasks/filter';
+    $.getJSON(url, initGetSuccess);
+  }
+
+  function initGetSuccess(data){
+    for(var i = 0; i < data.tasks.length; i++){
+      addTaskToTable(data.tasks[i]);
+    }
+  }
+
+  function addTaskToTable(task){
+    //Get data
+    debugger;
+    var isComplete = task.isComplete;
+    var name = task.name;
+    var dueDate = moment(task.dueDate).format('ll');
+    var taskId = task._id;
+
+    //make an a tag for each tag
+    var tags = task.tags;
+    var $tags = $('<div>');
+    for(var j = 0; j < tags.length; j++){
+      var $tag = $('<a href="#">');
+      if(j+1 === tags.length){
+        //last tag appended wont have comma after it
+        $tag.text(tags[j]);
+        $tags.append($tag);
+      }else{
+        $tag.text(tags[j]+', ');
+        $tags.append($tag);
+      }
+    }
+
+    // find priorityName associated with priority ID
+    var priorityId = task.priority;
+    var priorityName = $('tr[data-id="'+priorityId+'"]').children(':first').children(':first').text();
+
+    //Create jQuery DOM elements
+
+    var $isComplete = $('<td>');
+    if(isComplete === true){
+      $isComplete.append($('<input type="checkbox" checked>'));
+    }else{
+      $isComplete.append($('<input type="checkbox">'));
+    }
+
+    var $name = $('<td>').append($('<div>').text(name));
+    var $priority = $('<td>').append($('<div>').text(priorityName));
+    var $dueDate = $('<td>').append($('<div>').text(dueDate));
+    var $tagData = $('<td>').append($tags);
+    var $img = $('<img src="../../media/delete.png"/>').addClass('tDelete'); //will be used to delete row
+
+    var $row = $('<tr>').append($isComplete, $name, $dueDate, $priority, $tagData, $img);
+    $row.attr('data-id', taskId);
+    $('#taskTBody').append($row);
+
+    clearTaskInputs();
+  }
+
+  function saveTask(event){
+    var name = $('#taskNameInput').val();
+    var dueDate = $('#taskDueDateInput').val();
+    var priorityId = $('#selectPriority').val();
+    var tags = $('#tagsInput').val().split (' ,') || 'other';
+    var isComplete = $('#isCompleteInput').prop('checked');
+    event.preventDefault();  // prevents form from submitting twice
+    console.log(name, dueDate, priorityId, tags, isComplete);
+    
+    var url = window.location.origin.replace(/3000/, '4000') + '/tasks';
+    var obj = {name:name, dueDate:dueDate, priority: priorityId, tags:tags, isComplete:isComplete};
+    var type = 'POST';
+    var success = addTaskToTable;
+
+    $.ajax({url: url, type: type, data:obj, success: success});
+  }
+
+  function clearTaskInputs(){
+    $('#taskNameInput').val('');
+    $('#taskDueDateInput').val('');
+    $('#selectPriority').val('');
+    $('#tagsInput').val('');
   }
 
 })();

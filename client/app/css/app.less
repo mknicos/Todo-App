@@ -28,7 +28,8 @@ body, h1{
   border: 5px solid darken(@color-2, 25%);
   padding: 25px;
   display: none;
-  box-shadow: 5px 5px 3px 3px;
+  //box-shadow: 5px 5px 3px 3px black;
+  box-shadow: 0px 0px 25px 15px black;
   position: fixed;
   margin-top: -150px;
   margin-left: -125px;
@@ -38,6 +39,7 @@ body, h1{
   height: 250px;
   background-color: @color-2;
   text-align: center;
+  z-index: 100;
 }
 
 #pSave{
@@ -62,7 +64,7 @@ body, h1{
 }
 
 #pTable{
-  box-shadow: 5px 5px 3px 3px;
+  box-shadow: 5px 5px 3px 3px black;
   border: 3px solid darken(@color-2, 25%);
   width: 350px;
 }
@@ -106,9 +108,13 @@ body, h1{
 }
 /*------------------Task Form--------------------*/
 
+#tForm{
+  width: 350px;
+}
 
-
-
+#tagsInput{
+  overflow: auto;
+}
 
 
 
@@ -116,4 +122,39 @@ body, h1{
 
 
 /*-------------------Task Table------------------*/
+
+#taskTable{
+  box-shadow: 5px 5px 3px 3px black;
+  border: 3px solid darken(@color-2, 25%);
+}
+
+#taskFooter{
+  margin: 10px;
+  margin-top: 30px;
+}
+
+#taskFooter input{
+  width: 50px;
+}
+
+.tDelete{
+  width: 20px;
+  height: 20px;
+}
+
+#taskTable tr th, #taskTable tr th a{
+  /*table headers in tasks table */
+  color: grey;
+  font-size: 30px;
+  text-decoration: none;
+  text-align: center;
+}
+
+#taskTable tr td{
+  /*table data in the priority table */
+  font-size: 14px;
+  text-align: center;
+}
+
+
 
