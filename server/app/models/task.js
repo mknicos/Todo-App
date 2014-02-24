@@ -66,10 +66,14 @@ Task.findByFilter = function(data, fn){
   var page = parseInt((data.page) - 1);
   var sort = data.sort;
   var order = parseInt(data.order);
+
   delete data.limit;
   delete data.page;
   delete data.sort;
   delete data.order;
+
+  var options = {'limit': limit, 'skip': (limit*page), 'sort':sort};
+
   console.log('data NEXT:');
   console.log('Limit>>>');
   console.log(limit);
@@ -79,10 +83,12 @@ Task.findByFilter = function(data, fn){
   console.log(sort);
   console.log('Order>>>');
   console.log(order);
-  tasks.find(data, {sort: {sort: order}]).skip(limit * page).limit(limit).toArray(function(err, records){
-    //BUG----------------------------------------------
-    //'records' will be sent back to exports.filter
-    //and sent to requester in arrays
+  console.log('Options>>>');
+  console.log(options);
+
+  tasks.find(data, options).toArray(function(err, records){
+  //'records' will be sent back to exports.filter
+  //and sent to requester in arrays
     fn(records);
   });
 };
