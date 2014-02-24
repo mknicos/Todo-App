@@ -14,6 +14,7 @@ function Priority(priority){
 Priority.prototype.save = function(fn){
   var self = this;
   if(self._id){
+    self._id = Mongo.ObjectID(self._id);
     priorities.save(self, function(err, record){
       fn(err);
     });

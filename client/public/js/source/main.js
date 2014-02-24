@@ -111,7 +111,7 @@
   }
 
   function confirmChanges(){
-    //funciton is called when confirm button is clicked
+    //function is called when confirm button is clicked
     //sends updated input boxes to database
     //because user input could be on both or one table element
     //this accounts for either an unchanged or a changed element
@@ -133,6 +133,7 @@
       value = valueText;
     }
     id = $editRow.data('id');
+    debugger;
     
     var url = window.location.origin.replace(/3000/, '4000') + '/priorities/';
     var obj = {name: name, value: value, _id: id};

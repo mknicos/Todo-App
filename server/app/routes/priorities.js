@@ -29,8 +29,12 @@ exports.show = function(req, res){
 
 exports.update = function(req, res){
   Priority = global.nss.Priority;
+  console.log('REQ.BODY>>>>>>');
+  console.log(req.body);
 
   var priority = new Priority(req.body);
+  console.log(req.body);
+  console.log('req.body ^^^^^^^');
   priority.save(function(){
     res.send(priority);
   });
