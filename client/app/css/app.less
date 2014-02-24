@@ -19,6 +19,7 @@ body, h1{
 
 .disableBG{
   background-color: grey;
+  background: radial-gradient(white, gray, black); /* Standard syntax */
 }
 
 /*-----------------Add Priority Form-------------*/
@@ -28,15 +29,14 @@ body, h1{
   border: 5px solid darken(@color-2, 25%);
   padding: 25px;
   display: none;
-  //box-shadow: 5px 5px 3px 3px black;
   box-shadow: 0px 0px 25px 15px black;
   position: fixed;
-  margin-top: -150px;
+  margin-top: -160px;
   margin-left: -125px;
   top: 50%;
   left: 50%;
   width: 300px;
-  height: 250px;
+  height: 275px;
   background-color: @color-2;
   text-align: center;
   z-index: 100;
@@ -49,6 +49,15 @@ body, h1{
 
 #pForm input{
   border: 3px solid darken(@color-2, 25%);
+}
+
+#closePForm{
+  float: right;
+  position: relative;
+  top: -40px;
+  left: 40px;
+  width: 35px;
+  height: 35px;
 }
 
 /*----------------Priority Table-----------------*/
@@ -116,6 +125,14 @@ body, h1{
   overflow: auto;
 }
 
+#closeTForm{
+  float: right;
+  position: relative;
+  top: -45px;
+  left: 45px;
+  width: 35px;
+  height: 35px;
+}
 
 
 

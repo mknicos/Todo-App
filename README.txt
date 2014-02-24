@@ -27,3 +27,9 @@ Current known bugs:
   BUG FIXED---- PRIORITIES WORK AS PLANNED-----
 
 Priorities table auto sorts by value
+
+2.24.2014
+  Priorities bug fixed
+
+Future Updates:
+  Add close button to add Priorities and add Task windows

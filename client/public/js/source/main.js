@@ -15,6 +15,10 @@
     $('#pTable').on('click', '.popToInput', changeToInput);
     $('#pConfirm').click(confirmChanges);
     $('#openpForm').click(openForm);
+    $('#closePForm').click(closePForm);
+
+    //tasks-------------
+    getTasks();
     $('#addTask').click(saveTask);
     $('#nextPage').click(nextPage);
     $('#prevPage').click(prevPage);
@@ -22,12 +26,9 @@
     $('#taskTBody').on('click', '.tag', tagSearch);
     $('#openTForm').click(openTaskForm);
     $('#completeText').click(isCompleteSort);
-
-    //tasks----------
-    getTasks();
-
-
+    $('#closeTForm').click(closeTForm);
   }
+
 //------------------GLOBALS-------------------------//
 
   var $removedRow; // used to track row that delete button was clicked on, for deletion after succes from database res
@@ -56,7 +57,7 @@
 
   function openForm(){
   //Displays 'add priority form' when 'add' button clicked
-    $('#pForm').show();
+    $('#pForm').fadeIn('fast');
     $('body').addClass('disableBG');
   }
 
@@ -106,7 +107,7 @@
     }else{
       alert('priority name already exists in database, please pick a different name and try again');
     }
-    $('#pForm').hide();
+    $('#pForm').fadeOut('slow');
 
   }
 
@@ -179,6 +180,11 @@
     $('#tBody tr').remove();
     getPriorities();
     $('#pConfirm').hide();
+  }
+
+  function closePForm(){
+    $('#pForm').fadeOut('slow');
+    $('body').removeClass('disableBG');
   }
 
 //-------------------------------------------------------//
@@ -345,8 +351,13 @@
   }
 
   function openTaskForm(){
-    $('#tForm').show();
+    $('#tForm').fadeIn('fast');
     $('body').addClass('disableBG');
+  }
+
+  function closeTForm(){
+    $('#tForm').fadeOut('slow');
+    $('body').removeClass('disableBG');
   }
 
 })();
