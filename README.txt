@@ -25,3 +25,5 @@ Current known bugs:
   Priorities duplicate when one is updated that was there on page load, doesnt happen if it was one that was created
   or previously updated since page load
   BUG FIXED---- PRIORITIES WORK AS PLANNED-----
+
+Priorities table auto sorts by value
