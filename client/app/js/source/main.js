@@ -21,6 +21,7 @@
     $('#taskTBody').on('click', '.tDelete', deleteTaskRow);
     $('#taskTBody').on('click', '.tag', tagSearch);
     $('#openTForm').click(openTaskForm);
+    $('#completeText').click(isCompleteSort);
 
     //tasks----------
     getTasks();
@@ -32,6 +33,7 @@
   var $removedRow; // used to track row that delete button was clicked on, for deletion after succes from database res
   var $editRow;
   var page = 1;
+  var filterObject= {};
 
 
 //-------------------------------------------------------//
@@ -212,11 +214,10 @@
       if(j+1 === tags.length){
         //last tag appended wont have comma after it
         $tag.text(tags[j]);
-        $tags.append($tag);
       }else{
         $tag.text(tags[j]+', ');
-        $tags.append($tag);
       }
+      $tags.append($tag);
     }
 
     // find priorityName associated with priority ID
@@ -295,27 +296,45 @@
   }
 
   function nextPage(event){
+    debugger;
     var url = window.location.origin.replace(/3000/, '4000') + '/tasks/filter';
     page++;
-    var obj = {page: page};
-    $.getJSON(url, obj, getFilterSuccess);
+    filterObject.page = page;
+    $.getJSON(url, filterObject, getFilterSuccess);
     event.preventDefault();  // prevents form from submitting twice
   }
 
   function prevPage(event){
     var url = window.location.origin.replace(/3000/, '4000') + '/tasks/filter';
     page--;
-    var obj = {page: page};
-    $.getJSON(url, obj, getFilterSuccess);
+    filterObject.page =  page;
+    $.getJSON(url, filterObject, getFilterSuccess);
     event.preventDefault();  // prevents form from submitting twice
   }
 
   function tagSearch(){
-    debugger;
+    page = 1;
     var tag = $(this).text();
     var url = window.location.origin.replace(/3000/, '4000') + '/tasks/filter';
-    var obj = {tag: tag};
+    var obj = {tags: tag};
     $.getJSON(url, obj, getFilterSuccess);
+  }
+
+  function isCompleteSort(event){
+    debugger;
+    event.preventDefault();
+    var direction;
+    $('#completeText').toggleClass('clicked');
+    if($('#completeText').hasClass('clicked')){
+      direction = 'asc';
+    }else{
+      direction = 'desc';
+    }
+    page = 1;
+    var url = window.location.origin.replace(/3000/, '4000') + '/tasks/filter';
+    filterObject = {'sort': ['isComplete', direction]};
+
+    $.getJSON(url, filterObject, getFilterSuccess);
   }
 
   function getFilterSuccess(data){
